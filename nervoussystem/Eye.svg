@@ -1,3 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Layer Toggle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+    #controls {
+      min-width: 200px;
+    }
+    svg {
+      border: 1px solid #ffffff;
+      max-width: 800px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div id="controls">
+  <h3>Toggle Layers</h3>
+</div>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 614.4 731.14">
   <g id="Optic_Nerve" data-name="Optic Nerve">
     <path d="M381.14,561.73c1.61,0,1.61-2.5,0-2.5s-1.61,2.5,0,2.5h0Z" fill="#d78ebe"/>
@@ -518,3 +545,39 @@
     <path d="M233.45,80.11c3.99,1.13,8.17,1.46,12.29.91,4.43-.6,8.7-2.28,13.19-2.48s8.34,1.89,12.22,4.01,7.85,4.41,11.7,6.76c.69.42,1.32-.66.63-1.08-3.91-2.38-7.88-4.68-11.9-6.87-3.56-1.94-7.14-3.94-11.29-4.08s-8.43,1.32-12.6,2.15c-4.64.93-9.34.76-13.9-.52-.78-.22-1.11.99-.33,1.21h0Z" fill="#231f20"/>
   </g>
 </svg>
+  </div>
+<script>
+  const controls = document.getElementById("controls");
+
+  // Wait a moment for SVG to load
+  window.addEventListener("load", () => {
+    const svg = document.querySelector("svg");
+    if (!svg) return;
+
+    const layers = svg.querySelectorAll(":scope > g");
+
+    layers.forEach(layer => {
+      const id = layer.id;
+      if (!id) return;
+
+      const label = document.createElement("label");
+      const checkbox = document.createElement("input");
+
+      checkbox.type = "checkbox";
+      checkbox.checked = true;
+
+      checkbox.addEventListener("change", () => {
+        layer.style.display = checkbox.checked ? "inline" : "none";
+      });
+
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(" " + id));
+
+      controls.appendChild(label);
+      controls.appendChild(document.createElement("br"));
+    });
+  });
+</script>
+
+</body>
+</html>
